@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Logo from '../logo';
 import {User} from '../../types/user.ts';
 
@@ -6,7 +7,7 @@ type HeaderProps = {
   favorites: [];
 };
 
-const Header = ({ user, favorites = [] }: HeaderProps): JSX.Element => (
+const Header = memo(({ user, favorites = [] }: HeaderProps): JSX.Element => (
   <header className="header">
     <div className="container">
       <div className="header__wrapper">
@@ -34,6 +35,8 @@ const Header = ({ user, favorites = [] }: HeaderProps): JSX.Element => (
       </div>
     </div>
   </header>
-);
+));
+
+Header.displayName = 'Header';
 
 export default Header;

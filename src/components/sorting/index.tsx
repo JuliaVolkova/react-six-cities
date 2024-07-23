@@ -1,17 +1,20 @@
+import { memo } from 'react';
 import {OPTIONS} from '../../const.ts';
 
 type OptionProps = {
   option: typeof OPTIONS[number];
 }
-const Option = ({option}: OptionProps) => (<li className="places__option" tabIndex={0}>{option}</li>);
+const Option = memo(({option}: OptionProps) => (<li className="places__option" tabIndex={0}>{option}</li>));
+Option.displayName = 'Option';
 
-const Options = () => (
+const Options = memo(() => (
   <ul className="places__options places__options--custom places__options--opened">
     {OPTIONS.map((option) => <Option option={option} key={option}/>)}
   </ul>
-);
+));
+Options.displayName = 'Options';
 
-const Sorting = ({option = 'Popular'}: OptionProps) => (
+const Sorting = memo(({option = 'Popular'}: OptionProps) => (
   <form className="places__sorting" action="#" method="get">
     <span className="places__sorting-caption">Sort by</span>
     <span className="places__sorting-type" tabIndex={0}>
@@ -22,5 +25,7 @@ const Sorting = ({option = 'Popular'}: OptionProps) => (
     </span>
     <Options/>
   </form>
-);
+));
+Sorting.displayName = 'Sorting';
+
 export default Sorting;

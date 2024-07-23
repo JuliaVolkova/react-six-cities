@@ -1,25 +1,30 @@
+import { memo } from 'react';
 import { Offer } from '../../types/offers.ts';
 
-const PremiumBadge = (): JSX.Element => (
+const PremiumBadge = memo((): JSX.Element => (
   <div className="place-card__mark">
     <span>Premium</span>
   </div>
-);
+));
+
+PremiumBadge.displayName = 'PremiumBadge';
 
 
 type BookmarkButtonProps = {
   isFavorite: boolean;
 }
-const BookmarkButton = ({ isFavorite }: BookmarkButtonProps): JSX.Element => (
+const BookmarkButton = memo(({ isFavorite }: BookmarkButtonProps): JSX.Element => (
   <button className="place-card__bookmark-button button" type="button">
     <svg className="place-card__bookmark-icon" width="18" height="19">
       <use xlinkHref="#icon-bookmark"></use>
     </svg>
     <span className="visually-hidden">{isFavorite ? 'In bookmarks' : ' To bookmarks'}</span>
   </button>
-);
+));
 
-const OfferCard = ({ isPremium, title, type, price, isFavorite, rating, previewImage }: Offer): JSX.Element => (
+BookmarkButton.displayName = 'BookmarkButton';
+
+const OfferCard = memo(({ isPremium, title, type, price, isFavorite, rating, previewImage }: Offer): JSX.Element => (
   <article className="cities__card place-card">
     {isPremium && <PremiumBadge/>}
     <div className="cities__image-wrapper place-card__image-wrapper">
@@ -47,6 +52,8 @@ const OfferCard = ({ isPremium, title, type, price, isFavorite, rating, previewI
       <p className="place-card__type">{type.toUpperCase()}</p>
     </div>
   </article>
-);
+));
+
+OfferCard.displayName = 'OfferCard';
 
 export default OfferCard;
