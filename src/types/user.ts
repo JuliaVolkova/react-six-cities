@@ -5,3 +5,6 @@ export type User = {
   email: string;
   token: string;
 }
+
+export type UserPreview = Pick<User, 'name' | 'avatarUrl' | 'isPro'>;
+

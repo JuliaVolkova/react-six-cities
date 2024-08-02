@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Offer } from '../../types/offers.ts';
+import { CardClassNamesMap } from '../../const.ts';
 
 const PremiumBadge = memo((): JSX.Element => (
   <div className="place-card__mark">
@@ -24,8 +25,10 @@ const BookmarkButton = memo(({ isFavorite }: BookmarkButtonProps): JSX.Element =
 
 BookmarkButton.displayName = 'BookmarkButton';
 
-const OfferCard = memo(({ isPremium, title, type, price, isFavorite, rating, previewImage }: Offer): JSX.Element => (
-  <article className="cities__card place-card">
+type OfferCardProps = Offer & { className: typeof CardClassNamesMap[keyof typeof CardClassNamesMap]};
+
+const OfferCard = memo(({ isPremium, title, type, price, isFavorite, rating, previewImage, className }: OfferCardProps): JSX.Element => (
+  <article className={`${className} place-card`}>
     {isPremium && <PremiumBadge/>}
     <div className="cities__image-wrapper place-card__image-wrapper">
       <a href="#">

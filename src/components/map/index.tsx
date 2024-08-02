@@ -1,7 +1,5 @@
 const Map = (): JSX.Element => (
-  <div className="cities__right-section">
-    <section className="cities__map map" />
-  </div>
+  <section className="cities__map map"/>
 );
 
 export default Map;
