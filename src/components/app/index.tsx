@@ -6,7 +6,7 @@ type AppProps = {
   offers: Offers;
 }
 
-const App = ({offers}: AppProps) => (
+const App = ({ offers }: AppProps) => (
   <div className="page page--gray page--main">
     <Header user={null} favorites={[]}/>
     <Main offers={offers}/>
