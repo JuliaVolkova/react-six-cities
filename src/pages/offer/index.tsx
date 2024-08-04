@@ -1,6 +1,6 @@
 import ImageGallery from '../../components/image-gallery';
 import OfferFeatures from '../../components/offer-features';
-import OfferGoods from '../../components/offerGoods';
+import OfferGoods from '../../components/offer-goods';
 import Host from '../../components/host';
 import Description from '../../components/description';
 import Reviews from '../../components/reviews';

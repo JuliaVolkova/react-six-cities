@@ -1,12 +1,13 @@
 import OfferCard from '../offer-card';
 import { Offers } from '../../types/offers.ts';
-import { CardClassNamesMap, CardListClassNamesMap } from '../../const.ts';
+import {CardClassNamesMap, CardListClassNamesMap, Place} from '../../const.ts';
 
 type OffersListProps = {
   offers: Offers;
+  place: Place;
   className: typeof CardListClassNamesMap[keyof typeof CardListClassNamesMap];
 }
-const OffersList = ({offers = [], className }: OffersListProps) => (
+const OffersList = ({offers = [], className, place }: OffersListProps) => (
   <div className={`${className} places__list tabs__content`}>
     {offers.map((offer) => (
       <OfferCard
@@ -21,7 +22,8 @@ const OffersList = ({offers = [], className }: OffersListProps) => (
         location={offer.location}
         previewImage={offer.previewImage}
         rating={offer.rating}
-        className={CardClassNamesMap.Main}
+        className={CardClassNamesMap[place]}
+        place={place}
       />
     ))}
   </div>

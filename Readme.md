@@ -1,4 +1,4 @@
-# Личный проект «{{projectTitle}}»
+# Личный проект «Six Cities»
 
 * Студент: Юлия Волкова.
 * Наставник: [Юлия Волкова](https://htmlacademy.ru/profile/julie_volkova).

@@ -1,6 +1,6 @@
-import { memo } from 'react';
-import { Offer } from '../../types/offers.ts';
-import { CardClassNamesMap } from '../../const.ts';
+import {memo} from 'react';
+import {Offer} from '../../types/offers.ts';
+import {CardClassNamesMap, CardImageOptions, Place} from '../../const.ts';
 
 const PremiumBadge = memo((): JSX.Element => (
   <div className="place-card__mark">
@@ -14,7 +14,7 @@ PremiumBadge.displayName = 'PremiumBadge';
 type BookmarkButtonProps = {
   isFavorite: boolean;
 }
-const BookmarkButton = memo(({ isFavorite }: BookmarkButtonProps): JSX.Element => (
+const BookmarkButton = memo(({isFavorite}: BookmarkButtonProps): JSX.Element => (
   <button className="place-card__bookmark-button button" type="button">
     <svg className="place-card__bookmark-icon" width="18" height="19">
       <use xlinkHref="#icon-bookmark"></use>
@@ -25,14 +25,29 @@ const BookmarkButton = memo(({ isFavorite }: BookmarkButtonProps): JSX.Element =
 
 BookmarkButton.displayName = 'BookmarkButton';
 
-type OfferCardProps = Offer & { className: typeof CardClassNamesMap[keyof typeof CardClassNamesMap]};
+type OfferCardProps = Offer & {
+  className: typeof CardClassNamesMap[keyof typeof CardClassNamesMap];
+  place: Place;
+};
 
-const OfferCard = memo(({ isPremium, title, type, price, isFavorite, rating, previewImage, className }: OfferCardProps): JSX.Element => (
+const OfferCard = memo(({
+  isPremium,
+  title,
+  type,
+  price,
+  isFavorite,
+  rating,
+  previewImage,
+  className,
+  place = 'Main'
+}: OfferCardProps): JSX.Element => (
   <article className={`${className} place-card`}>
     {isPremium && <PremiumBadge/>}
-    <div className="cities__image-wrapper place-card__image-wrapper">
+    <div className={`${CardImageOptions[place].className} place-card__image-wrapper`}>
       <a href="#">
-        <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+        <img className="place-card__image" src={previewImage} width={CardImageOptions[place].width}
+          height={CardImageOptions[place].height} alt="Place image"
+        />
       </a>
     </div>
     <div className="place-card__info">
@@ -41,11 +56,11 @@ const OfferCard = memo(({ isPremium, title, type, price, isFavorite, rating, pre
           <b className="place-card__price-value">&euro;{price}</b>
           <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
-        <BookmarkButton isFavorite={isFavorite} />
+        <BookmarkButton isFavorite={isFavorite}/>
       </div>
       <div className="place-card__rating rating">
         <div className="place-card__stars rating__stars">
-          <span style={{width: (rating * 100) / 5 }}></span>
+          <span style={{width: (rating * 100) / 5}}></span>
           <span className="visually-hidden">Rating</span>
         </div>
       </div>
