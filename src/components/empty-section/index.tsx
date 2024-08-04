@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type EmptySectionProps = {
   title: string;
   description: string;
@@ -7,7 +9,7 @@ type EmptySectionProps = {
 // No places to stay available
 // {`We could not find any property available at the moment in ${currentCity}`}
 
-const EmptySection = ({ title, description, children }: EmptySectionProps) => (
+const EmptySection = memo(({ title, description, children }: EmptySectionProps) => (
   <div className="cities">
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">
@@ -20,6 +22,8 @@ const EmptySection = ({ title, description, children }: EmptySectionProps) => (
       <div className="cities__right-section"></div>
     </div>
   </div>
-);
+));
+
+EmptySection.displayName = 'EmptySection';
 
 export default EmptySection;

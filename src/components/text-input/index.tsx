@@ -1,8 +1,10 @@
+import { memo } from 'react';
+
 type TextInputProps = {
   label: 'email' | 'password';
 };
 
-const TextInput = ({ label }: TextInputProps): JSX.Element => {
+const TextInput = memo(({ label }: TextInputProps): JSX.Element => {
   const labelText = label.toUpperCase();
   return (
     <div className="login__input-wrapper form__input-wrapper">
@@ -16,6 +18,8 @@ const TextInput = ({ label }: TextInputProps): JSX.Element => {
       />
     </div>
   );
-};
+});
+
+TextInput.displayName = 'TextInput';
 
 export default TextInput;

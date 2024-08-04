@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import {OfferReview, OfferReviews} from '../../types/reviews.ts';
 
 type ReviewProps = {
   review: OfferReview;
 };
 
-const Review = ({review}: ReviewProps) => {
+const Review = memo(({review}: ReviewProps) => {
   const {user: {name, avatarUrl}, comment, date} = review;
   return (
     <li className="reviews__item">
@@ -28,26 +29,32 @@ const Review = ({review}: ReviewProps) => {
       </div>
     </li>
   );
-};
+});
 
-const ReviewList = ({reviews}: ReviewsProps): JSX.Element => (
+Review.displayName = 'Review';
+
+const ReviewList = memo(({reviews}: ReviewsProps): JSX.Element => (
   <ul className="reviews__list">{reviews.map((review) =>
     <Review review={review} key={review.id}/>)}
   </ul>
-);
+));
+
+ReviewList.displayName = 'ReviewList';
 
 type ReviewsProps = {
   reviews: OfferReviews;
 }
 
-const Reviews = ({reviews = []}: ReviewsProps): JSX.Element => (
+const Reviews = memo(({reviews = []}: ReviewsProps): JSX.Element => (
   <section className="offer__reviews reviews">
     <h2 className="reviews__title">
       Reviews &middot; <span className="reviews__amount">{reviews.length}</span>
     </h2>
     <ReviewList reviews={reviews}/>
   </section>
-);
+));
+
+Reviews.displayName = 'Reviews';
 
 export default Reviews;
 

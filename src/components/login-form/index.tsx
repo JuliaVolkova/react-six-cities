@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import TextInput from '../text-input';
 
-const LoginForm = () => (
+const LoginForm = memo(() => (
   <section className="login">
     <h1 className="login__title">Sign in</h1>
     <form className="login__form form" action="#" method="post">
@@ -14,6 +15,8 @@ const LoginForm = () => (
       </button>
     </form>
   </section>
-);
+));
+
+LoginForm.displayName = 'LoginForm';
 
 export default LoginForm;

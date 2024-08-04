@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import OfferCard from '../offer-card';
 import { Offers } from '../../types/offers.ts';
 import {CardClassNamesMap, CardListClassNamesMap, Place} from '../../const.ts';
@@ -7,7 +8,7 @@ type OffersListProps = {
   place: Place;
   className: typeof CardListClassNamesMap[keyof typeof CardListClassNamesMap];
 }
-const OffersList = ({offers = [], className, place }: OffersListProps) => (
+const OffersList = memo(({offers = [], className, place }: OffersListProps) => (
   <div className={`${className} places__list tabs__content`}>
     {offers.map((offer) => (
       <OfferCard
@@ -27,6 +28,8 @@ const OffersList = ({offers = [], className, place }: OffersListProps) => (
       />
     ))}
   </div>
-);
+));
+
+OffersList.displayName = 'OffersList';
 
 export default OffersList;

@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import OffersList from '../offers-list';
 import {CardListClassNamesMap} from '../../const.ts';
 import {CityName, Offer, Offers} from '../../types/offers.ts';
@@ -16,7 +17,7 @@ type FavoritesListItemProps = {
   cityOffers: Offers;
 };
 
-const FavoritesListItem = ({ city, cityOffers = [] }: FavoritesListItemProps): JSX.Element => (
+const FavoritesListItem = memo(({city, cityOffers = []}: FavoritesListItemProps): JSX.Element => (
   <li className="favorites__locations-items">
     <div className="favorites__locations locations locations--current">
       <div className="locations__item">
@@ -27,13 +28,15 @@ const FavoritesListItem = ({ city, cityOffers = [] }: FavoritesListItemProps): J
     </div>
     <OffersList offers={cityOffers} className={CardListClassNamesMap.Favorites} place='Favorites' />
   </li>
-);
+));
+
+FavoritesListItem.displayName = 'FavoritesListItem';
 
 type FavoritesListProps = {
   favoriteOffers: Offers;
 };
 
-const FavoritesList = ({ favoriteOffers }: FavoritesListProps): JSX.Element => {
+const FavoritesList = memo(({favoriteOffers}: FavoritesListProps): JSX.Element => {
   const groupedOffers = groupOffersByCity(favoriteOffers);
   return (
     <ul className="favorites__list">
@@ -42,6 +45,8 @@ const FavoritesList = ({ favoriteOffers }: FavoritesListProps): JSX.Element => {
       ))}
     </ul>
   );
-};
+});
+
+FavoritesList.displayName = 'FavoritesList';
 
 export default FavoritesList;
