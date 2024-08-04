@@ -6,6 +6,7 @@ import Description from '../../components/description';
 import Reviews from '../../components/reviews';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list';
+import BookmarkButton from '../../components/bookmark-button';
 import {images, features, goods, host, description, reviews} from '../../mocks/offer.ts';
 import {CardListClassNamesMap} from '../../const.ts';
 
@@ -22,6 +23,7 @@ const Offer = (): JSX.Element => (
             <h1 className="offer__name">
               Beautiful &amp; luxurious studio at great location
             </h1>
+            <BookmarkButton isFavorite={false} place='Offer'/>
             <button className="offer__bookmark-button button" type="button">
               <svg className="offer__bookmark-icon" width="31" height="33">
                 <use xlinkHref="#icon-bookmark"></use>
@@ -59,7 +61,7 @@ const Offer = (): JSX.Element => (
       <section className="near-places places">
         <h2 className="near-places__title">Other places in the neighbourhood</h2>
         <div className=" places__list">
-          <OffersList offers={[]} className={CardListClassNamesMap.Offer}/>
+          <OffersList offers={[]} className={CardListClassNamesMap.Offer} place='Offer' />
         </div>
       </section>
     </div>

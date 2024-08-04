@@ -1,6 +1,8 @@
 import {memo} from 'react';
-import {Offer} from '../../types/offers.ts';
-import {CardClassNamesMap, CardImageOptions, Place} from '../../const.ts';
+import RatingStars from '../rating';
+import BookmarkButton from '../bookmark-button';
+import {CardClassNamesMap, CardImageOptions} from '../../const.ts';
+import { Place, Offer } from '../../types/offers.ts';
 
 const PremiumBadge = memo((): JSX.Element => (
   <div className="place-card__mark">
@@ -9,21 +11,6 @@ const PremiumBadge = memo((): JSX.Element => (
 ));
 
 PremiumBadge.displayName = 'PremiumBadge';
-
-
-type BookmarkButtonProps = {
-  isFavorite: boolean;
-}
-const BookmarkButton = memo(({isFavorite}: BookmarkButtonProps): JSX.Element => (
-  <button className="place-card__bookmark-button button" type="button">
-    <svg className="place-card__bookmark-icon" width="18" height="19">
-      <use xlinkHref="#icon-bookmark"></use>
-    </svg>
-    <span className="visually-hidden">{isFavorite ? 'In bookmarks' : ' To bookmarks'}</span>
-  </button>
-));
-
-BookmarkButton.displayName = 'BookmarkButton';
 
 type OfferCardProps = Offer & {
   className: typeof CardClassNamesMap[keyof typeof CardClassNamesMap];
@@ -56,18 +43,13 @@ const OfferCard = memo(({
           <b className="place-card__price-value">&euro;{price}</b>
           <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
-        <BookmarkButton isFavorite={isFavorite}/>
+        <BookmarkButton isFavorite={isFavorite} place={place} />
       </div>
-      <div className="place-card__rating rating">
-        <div className="place-card__stars rating__stars">
-          <span style={{width: (rating * 100) / 5}}></span>
-          <span className="visually-hidden">Rating</span>
-        </div>
-      </div>
+      <RatingStars rating={rating} place={place} />
       <h2 className="place-card__name">
         <a href="#">{title}</a>
       </h2>
-      <p className="place-card__type">{type.toUpperCase()}</p>
+      <p className="place-card__type">{type}</p>
     </div>
   </article>
 ));
