@@ -1,0 +1,7 @@
+# Ignore artifacts:
+dist
+markup
+public
+
+# Ignore all HTML files:
+**/*.html
