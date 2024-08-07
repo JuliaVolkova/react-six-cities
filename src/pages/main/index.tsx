@@ -21,8 +21,8 @@ const Main = ({ offers }: MainProps): JSX.Element => (
           <Sorting option='Popular' />
           <OffersList
             offers={offers}
-            className={CardListClassNamesMap.Main}
-            place='Main'
+            className={CardListClassNamesMap.Cities}
+            place='Cities'
           />
         </section>
         <div className='cities__right-section'>

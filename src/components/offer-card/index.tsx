@@ -29,7 +29,7 @@ const OfferCard = memo(
     rating,
     previewImage,
     className,
-    place = 'Main',
+    place = 'Cities',
   }: OfferCardProps): JSX.Element => (
     <article className={`${className} place-card`}>
       {isPremium && <PremiumBadge />}

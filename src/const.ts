@@ -7,6 +7,13 @@ export const CITIES = [
   'Dusseldorf',
 ] as const;
 
+export const enum AppRoute {
+  Cities = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer/:id',
+}
+
 export const OPTIONS = [
   'Popular',
   'Price: low to high',
@@ -15,25 +22,25 @@ export const OPTIONS = [
 ] as const;
 
 export const CardClassNamesMap = {
-  Main: 'cities__card',
+  Cities: 'cities__card',
   Offer: 'near-places__card',
   Favorites: 'favorites__card',
 } as const;
 
 export const CardListClassNamesMap = {
-  Main: 'cities__places-list',
+  Cities: 'cities__places-list',
   Offer: 'near-places__list',
   Favorites: 'favorites__list',
 } as const;
 
 export const CardImageOptions = {
-  Main: { width: 260, height: 200, className: 'cities__image-wrapper' },
+  Cities: { width: 260, height: 200, className: 'cities__image-wrapper' },
   Favorites: { width: 150, height: 110, className: 'favorites__image-wrapper' },
   Offer: { width: 260, height: 200, className: 'near-places__image-wrapper' },
 } as const;
 
 export const BookmarkButtonOptions = {
-  Main: { width: 18, height: 19, className: 'place-card__bookmark-button' },
+  Cities: { width: 18, height: 19, className: 'place-card__bookmark-button' },
   Offer: { width: 31, height: 33, className: 'offer__bookmark-button' },
   Favorites: {
     width: 18,
