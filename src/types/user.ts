@@ -4,7 +4,6 @@ export type User = {
   isPro: boolean;
   email: string;
   token: string;
-}
+};
 
 export type UserPreview = Pick<User, 'name' | 'avatarUrl' | 'isPro'>;
-
