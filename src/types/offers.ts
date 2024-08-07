@@ -7,21 +7,21 @@ export enum Rating {
   badly = 2,
   'not bad' = 3,
   good = 4,
-  perfect = 5
+  perfect = 5,
 }
 
-export type CityName = typeof CITIES[number];
+export type CityName = (typeof CITIES)[number];
 
 export type City = {
   name: CityName;
   location: Location;
-}
+};
 
 export type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
-}
+};
 
 type OfferType = 'hotel' | 'house' | 'apartment' | 'room';
 
@@ -36,7 +36,6 @@ export type Offer = {
   isPremium: boolean;
   rating: number;
   previewImage: string;
-}
+};
 
 export type Offers = Offer[];
-

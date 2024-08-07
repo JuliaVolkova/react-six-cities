@@ -7,10 +7,10 @@ type TextInputProps = {
 const TextInput = memo(({ label }: TextInputProps): JSX.Element => {
   const labelText = label.toUpperCase();
   return (
-    <div className="login__input-wrapper form__input-wrapper">
-      <label className="visually-hidden">{labelText}</label>
+    <div className='login__input-wrapper form__input-wrapper'>
+      <label className='visually-hidden'>{labelText}</label>
       <input
-        className="login__input form__input"
+        className='login__input form__input'
         type={label}
         name={label}
         placeholder={labelText}

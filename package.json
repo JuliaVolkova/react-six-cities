@@ -7,7 +7,9 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx",
     "preview": "vite preview",
-    "test": "vitest --passWithNoTests"
+    "ts-check": "tsc",
+    "test": "vitest --passWithNoTests",
+    "prepare": "husky"
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.7",
@@ -42,7 +44,10 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-react-refresh": "0.4.3",
     "faker": "5.5.3",
+    "husky": "9.1.4",
     "jsdom": "22.1.0",
+    "lint-staged": "15.2.8",
+    "prettier": "3.3.3",
     "typescript": "5.2.2",
     "vite": "4.4.11",
     "vitest": "0.34.6"
