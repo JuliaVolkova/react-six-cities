@@ -15,7 +15,7 @@ import {
   description,
   reviews,
 } from '../../mocks/offer.ts';
-import { CardListClassNamesMap } from '../../const.ts';
+import { CardListClassNamesMap } from '../../stylesOptions.ts';
 
 const Offer = (): JSX.Element => (
   <main className='page__main page__main--offer'>
@@ -34,19 +34,6 @@ const Offer = (): JSX.Element => (
               isFavorite={false}
               place='Offer'
             />
-            <button
-              className='offer__bookmark-button button'
-              type='button'
-            >
-              <svg
-                className='offer__bookmark-icon'
-                width='31'
-                height='33'
-              >
-                <use xlinkHref='#icon-bookmark'></use>
-              </svg>
-              <span className='visually-hidden'>To bookmarks</span>
-            </button>
           </div>
           <div className='offer__rating rating'>
             <div className='offer__stars rating__stars'>

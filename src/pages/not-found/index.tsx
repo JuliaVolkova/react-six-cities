@@ -1,12 +1,14 @@
 import EmptySection from '../../components/empty-section';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const.ts';
 
 const BackLink = () => (
-  <a
+  <Link
+    to={AppRoute.Cities}
     className='locations__item-link'
-    href='#'
   >
     <span>Back to main page ➝ </span>
-  </a>
+  </Link>
 );
 
 const NotFound = () => (

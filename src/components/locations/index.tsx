@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { CITIES } from '../../const.ts';
+import { Link } from 'react-router-dom';
+import { AppRoute, CITIES } from '../../const.ts';
 
 type LocationProps = {
   city: (typeof CITIES)[number];
@@ -8,14 +9,13 @@ type LocationProps = {
 const Location = memo(
   ({ city }: LocationProps): JSX.Element => (
     <li className='locations__item'>
-      <a
+      <Link to={AppRoute.Cities}
         className='locations__item-link tabs__item'
-        href='#'
       >
         <span>{city}</span>
-      </a>
+      </Link>
     </li>
-  )
+  ),
 );
 Location.displayName = 'Location';
 
@@ -33,7 +33,7 @@ const Locations = memo(
         </ul>
       </section>
     </div>
-  )
+  ),
 );
 Locations.displayName = 'Locations';
 

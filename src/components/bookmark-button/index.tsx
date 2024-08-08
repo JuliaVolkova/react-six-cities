@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { BookmarkButtonOptions } from '../../const.ts';
+import { BookmarkButtonOptions } from '../../stylesOptions.ts';
 import { Place } from '../../types/offers.ts';
 
 type BookmarkButtonProps = {
