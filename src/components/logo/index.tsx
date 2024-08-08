@@ -1,19 +1,28 @@
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const.ts';
+import { LogoImgOptions } from '../../stylesOptions.ts';
+
+type LogoProps = {
+  place: keyof typeof LogoImgOptions;
+}
 
 const Logo = memo(
-  (): JSX.Element => (
-    <div className='header__left'>
-      <a className='header__logo-link header__logo-link--active'>
+  ({ place = 'Header' }: LogoProps): JSX.Element => (
+    <div className={`${place === 'Header' ? 'header__left' : ''}`}>
+      <Link to={AppRoute.Cities}
+        className={`${place.toLowerCase()}__logo-link ${place.toLowerCase()}__logo-link--active`}
+      >
         <img
-          className='header__logo'
+          className={LogoImgOptions[place].className}
           src='img/logo.svg'
           alt='6 cities logo'
-          width='81'
-          height='41'
+          width={LogoImgOptions[place].width}
+          height={LogoImgOptions[place].height}
         />
-      </a>
+      </Link>
     </div>
-  )
+  ),
 );
 
 Logo.displayName = 'Logo';

@@ -9,18 +9,20 @@ import Layout from '../layout';
 import PrivateRoute from '../private-route';
 import { Offers } from '../../types/offers.ts';
 import { AppRoute } from '../../const.ts';
+import { User } from '../../types/user.ts';
 
 type AppProps = {
   offers: Offers;
+  user: User;
 };
 
-const App = ({ offers }: AppProps) => (
+const App = ({ offers, user }: AppProps) => (
   <HelmetProvider>
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Cities}
-          element={<Layout />}
+          element={<Layout user={user}/>}
         >
           <Route
             index
@@ -29,7 +31,7 @@ const App = ({ offers }: AppProps) => (
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute user={null}>
+              <PrivateRoute user={user}>
                 <Favorites offers={offers} />
               </PrivateRoute>
             }
@@ -43,7 +45,7 @@ const App = ({ offers }: AppProps) => (
             element={
               <PrivateRoute
                 isReverse
-                user={null}
+                user={user}
               >
                 <Login />
               </PrivateRoute>

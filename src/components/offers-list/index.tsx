@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import OfferCard from '../offer-card';
 import { Offers } from '../../types/offers.ts';
-import { CardClassNamesMap, CardListClassNamesMap } from '../../const.ts';
+import { CardClassNamesMap, CardListClassNamesMap } from '../../stylesOptions.ts';
 import { Place } from '../../types/offers.ts';
 
 type OffersListProps = {

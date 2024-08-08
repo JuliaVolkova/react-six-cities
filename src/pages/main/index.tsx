@@ -3,7 +3,7 @@ import Locations from '../../components/locations';
 import OffersList from '../../components/offers-list';
 import Map from '../../components/map';
 import { Offers } from '../../types/offers.ts';
-import { CardListClassNamesMap } from '../../const.ts';
+import { CardListClassNamesMap } from '../../stylesOptions.ts';
 
 type MainProps = {
   offers: Offers;

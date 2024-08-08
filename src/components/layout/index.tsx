@@ -1,26 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../header';
-import { AppRoute } from '../../const.ts';
+import { DEFAULT_PLACE } from '../../const.ts';
+import { MainBlockClassNamesMap, PathToPlacesMap } from '../../stylesOptions.ts';
+import { User } from '../../types/user.ts';
 
-const MainBlockClassNamesMap: { [key: string]: string } = {
-  Cities: 'page page--gray page--main',
-  Offer: 'page',
-  Favorites: 'page',
-  Login: 'page page--gray page--login',
-} as const;
+type LayoutProps = {
+  user: User;
+}
 
-const PathToPlacesMap: { [key: string]: keyof typeof MainBlockClassNamesMap } =
-  {
-    [AppRoute.Cities]: 'Cities',
-    [AppRoute.Offer]: 'Offer',
-    [AppRoute.Favorites]: 'Favorites',
-    [AppRoute.Login]: 'Login',
-  } as const;
-
-const DEFAULT_PLACE = 'Cities';
-
-const Layout = () => {
+const Layout = ({ user }: LayoutProps) => {
   const [currentPath, setCurrentPath] =
     useState<keyof typeof MainBlockClassNamesMap>(DEFAULT_PLACE);
   const { pathname } = useLocation();
@@ -32,10 +21,11 @@ const Layout = () => {
   }, [currentPath, pathname]);
 
   return (
-    <div className={MainBlockClassNamesMap[currentPath]}>
+    <div className={MainBlockClassNamesMap[currentPath] ?? MainBlockClassNamesMap.NotFound}>
       <Header
-        user={null}
+        user={user}
         favorites={[]}
+        place={currentPath}
       />
       <Outlet />
     </div>

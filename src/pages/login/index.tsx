@@ -1,4 +1,6 @@
 import LoginForm from '../../components/login-form';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const.ts';
 
 const Login = () => (
   <main className='page__main page__main--login'>
@@ -6,12 +8,12 @@ const Login = () => (
       <LoginForm />
       <section className='locations locations--login locations--current'>
         <div className='locations__item'>
-          <a
+          <Link
+            to={AppRoute.Cities}
             className='locations__item-link'
-            href='#'
           >
             <span>Amsterdam</span>
-          </a>
+          </Link>
         </div>
       </section>
     </div>
