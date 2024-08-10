@@ -1,6 +1,8 @@
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
 import OffersList from '../offers-list';
-import { CardListClassNamesMap } from '../../const.ts';
+import { AppRoute } from '../../const.ts';
+import { CardListClassNamesMap } from '../../stylesOptions.ts';
 import { CityName, Offer, Offers } from '../../types/offers.ts';
 
 const groupOffersByCity = (offers: Offers) =>
@@ -26,12 +28,12 @@ const FavoritesListItem = memo(
     <li className='favorites__locations-items'>
       <div className='favorites__locations locations locations--current'>
         <div className='locations__item'>
-          <a
+          <Link
+            to={AppRoute.Cities}
             className='locations__item-link'
-            href='#'
           >
             <span>{city}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <OffersList

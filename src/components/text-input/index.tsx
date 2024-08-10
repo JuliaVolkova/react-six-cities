@@ -1,11 +1,12 @@
 import { memo } from 'react';
+import { capitalizeFirstLetter } from '../../utils.ts';
 
 type TextInputProps = {
   label: 'email' | 'password';
 };
 
 const TextInput = memo(({ label }: TextInputProps): JSX.Element => {
-  const labelText = label.toUpperCase();
+  const labelText = capitalizeFirstLetter(label);
   return (
     <div className='login__input-wrapper form__input-wrapper'>
       <label className='visually-hidden'>{labelText}</label>

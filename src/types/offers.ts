@@ -1,6 +1,6 @@
 import { CITIES } from '../const.ts';
 
-export type Place = 'Main' | 'Favorites' | 'Offer';
+export type Place = 'Cities' | 'Favorites' | 'Offer';
 
 export enum Rating {
   terribly = 1,
