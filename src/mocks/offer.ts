@@ -4,7 +4,7 @@ export const images = [
   'img/apartment-02.jpg',
   'img/apartment-03.jpg',
   'img/studio-01.jpg',
-  'img/apartment-01.jpg',
+  'img/studio-photos.jpg',
 ];
 
 export const features = ['Apartment', '3 Bedrooms', 'Max 4 adults'];

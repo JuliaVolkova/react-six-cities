@@ -11,7 +11,7 @@ const PremiumBadge = memo(
     <div className='place-card__mark'>
       <span>Premium</span>
     </div>
-  )
+  ),
 );
 
 PremiumBadge.displayName = 'PremiumBadge';
@@ -19,6 +19,7 @@ PremiumBadge.displayName = 'PremiumBadge';
 type OfferCardProps = Offer & {
   className: (typeof CardClassNamesMap)[keyof typeof CardClassNamesMap];
   place: Place;
+  onMouseHover?: (offerId?: string) => void;
 };
 
 const OfferCard = memo(
@@ -32,11 +33,25 @@ const OfferCard = memo(
     previewImage,
     className,
     place = 'Cities',
-    id
+    id,
+    onMouseHover,
   }: OfferCardProps): JSX.Element => {
     const urlToOffer = generatePath(AppRoute.Offer, { id });
+
+    const handleMouseEnter = () => {
+      if (onMouseHover) {
+        onMouseHover(id);
+      }
+    };
+
+    const handleMouseLeave = () => {
+      if (onMouseHover) {
+        onMouseHover();
+      }
+    };
+
     return (
-      <article className={`${className} place-card`}>
+      <article className={`${className} place-card`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         {isPremium && <PremiumBadge />}
         <div
           className={`${CardImageOptions[place].className} place-card__image-wrapper`}
@@ -73,7 +88,7 @@ const OfferCard = memo(
         </div>
       </article>
     );
-  }
+  },
 );
 
 OfferCard.displayName = 'OfferCard';
