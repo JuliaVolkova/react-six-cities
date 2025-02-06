@@ -10,12 +10,9 @@ export enum Rating {
   perfect = 5,
 }
 
-export type CityName = (typeof CITIES)[number];
+export type CityName = Pick<City, 'name'>;
 
-export type City = {
-  name: CityName;
-  location: Location;
-};
+export type City = typeof CITIES[number];
 
 export type Location = {
   latitude: number;

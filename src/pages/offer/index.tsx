@@ -16,70 +16,77 @@ import {
   reviews,
 } from '../../mocks/offer.ts';
 import { CardListClassNamesMap } from '../../stylesOptions.ts';
+import { offers } from '../../mocks/offers.ts';
+import { DEFAULT_CITY } from '../../const.ts';
+import { useParams } from 'react-router-dom';
 
-const Offer = (): JSX.Element => (
-  <main className='page__main page__main--offer'>
-    <section className='offer'>
-      <ImageGallery images={images} />
-      <div className='offer__container container'>
-        <div className='offer__wrapper'>
-          <div className='offer__mark'>
-            <span>Premium</span>
+const Offer = (): JSX.Element => {
+  const { id } = useParams();
+  const nearPlaces = offers.slice(0, 3);
+  return (
+    <main className='page__main page__main--offer'>
+      <section className='offer'>
+        <ImageGallery images={images} />
+        <div className='offer__container container'>
+          <div className='offer__wrapper'>
+            <div className='offer__mark'>
+              <span>Premium</span>
+            </div>
+            <div className='offer__name-wrapper'>
+              <h1 className='offer__name'>
+                Beautiful &amp; luxurious studio at great location
+              </h1>
+              <BookmarkButton
+                isFavorite={false}
+                place='Offer'
+              />
+            </div>
+            <div className='offer__rating rating'>
+              <div className='offer__stars rating__stars'>
+                <span style={{ width: '80%' }}></span>
+                <span className='visually-hidden'>Rating</span>
+              </div>
+              <span className='offer__rating-value rating__value'>4.8</span>
+            </div>
+            <OfferFeatures features={features} />
+            <div className='offer__price'>
+              <b className='offer__price-value'>&euro;120</b>
+              <span className='offer__price-text'>&nbsp;night</span>
+            </div>
+            <div className='offer__inside'>
+              <h2 className='offer__inside-title'>What&apos;s inside</h2>
+              <OfferGoods goods={goods} />
+            </div>
+            <div className='offer__host'>
+              <h2 className='offer__host-title'>Meet the host</h2>
+              <Host
+                avatarUrl={host.avatarUrl}
+                isPro={host.isPro}
+                userName={host.name}
+              />
+              <Description description={description} />
+            </div>
+            <Reviews reviews={reviews} />
           </div>
-          <div className='offer__name-wrapper'>
-            <h1 className='offer__name'>
-              Beautiful &amp; luxurious studio at great location
-            </h1>
-            <BookmarkButton
-              isFavorite={false}
+        </div>
+        <Map offers={offers} activeOffer={id} city={DEFAULT_CITY} place='Offer' />
+      </section>
+      <div className='container'>
+        <section className='near-places places'>
+          <h2 className='near-places__title'>
+            Other places in the neighbourhood
+          </h2>
+          <div className=' places__list'>
+            <OffersList
+              offers={nearPlaces}
+              className={CardListClassNamesMap.Offer}
               place='Offer'
             />
           </div>
-          <div className='offer__rating rating'>
-            <div className='offer__stars rating__stars'>
-              <span style={{ width: '80%' }}></span>
-              <span className='visually-hidden'>Rating</span>
-            </div>
-            <span className='offer__rating-value rating__value'>4.8</span>
-          </div>
-          <OfferFeatures features={features} />
-          <div className='offer__price'>
-            <b className='offer__price-value'>&euro;120</b>
-            <span className='offer__price-text'>&nbsp;night</span>
-          </div>
-          <div className='offer__inside'>
-            <h2 className='offer__inside-title'>What&apos;s inside</h2>
-            <OfferGoods goods={goods} />
-          </div>
-          <div className='offer__host'>
-            <h2 className='offer__host-title'>Meet the host</h2>
-            <Host
-              avatarUrl={host.avatarUrl}
-              isPro={host.isPro}
-              userName={host.name}
-            />
-            <Description description={description} />
-          </div>
-          <Reviews reviews={reviews} />
-        </div>
+        </section>
       </div>
-      <Map />
-    </section>
-    <div className='container'>
-      <section className='near-places places'>
-        <h2 className='near-places__title'>
-          Other places in the neighbourhood
-        </h2>
-        <div className=' places__list'>
-          <OffersList
-            offers={[]}
-            className={CardListClassNamesMap.Offer}
-            place='Offer'
-          />
-        </div>
-      </section>
-    </div>
-  </main>
-);
+    </main>
+  );
+};
 
 export default Offer;

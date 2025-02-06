@@ -7,10 +7,12 @@ import { Place } from '../../types/offers.ts';
 type OffersListProps = {
   offers: Offers;
   place: Place;
+  onMouseHover?: (offerId?: string) => void;
   className: (typeof CardListClassNamesMap)[keyof typeof CardListClassNamesMap];
 };
+
 const OffersList = memo(
-  ({ offers = [], className, place }: OffersListProps) => (
+  ({ offers = [], className, place, onMouseHover }: OffersListProps) => (
     <div className={`${className} places__list tabs__content`}>
       {offers.map((offer) => (
         <OfferCard
@@ -27,6 +29,7 @@ const OffersList = memo(
           rating={offer.rating}
           className={CardClassNamesMap[place]}
           place={place}
+          onMouseHover={onMouseHover}
         />
       ))}
     </div>

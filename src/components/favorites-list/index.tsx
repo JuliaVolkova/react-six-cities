@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import OffersList from '../offers-list';
 import { AppRoute } from '../../const.ts';
 import { CardListClassNamesMap } from '../../stylesOptions.ts';
-import { CityName, Offer, Offers } from '../../types/offers.ts';
+import { Offer, Offers } from '../../types/offers.ts';
 
 const groupOffersByCity = (offers: Offers) =>
   offers.reduce(
-    (groupOffers: Record<CityName, Offer[]>, offer) => {
+    (groupOffers: Record<string, Offer[]>, offer) => {
       const cityName = offer.city.name;
       if (!groupOffers[cityName]) {
         groupOffers[cityName] = [];
@@ -15,11 +15,11 @@ const groupOffersByCity = (offers: Offers) =>
       groupOffers[cityName].push(offer);
       return groupOffers;
     },
-    {} as Record<CityName, Offers>
+    {} as Record<string, Offers>
   );
 
 type FavoritesListItemProps = {
-  city: CityName;
+  city: string;
   cityOffers: Offers;
 };
 
@@ -58,7 +58,7 @@ const FavoritesList = memo(
       <ul className='favorites__list'>
         {Object.entries(groupedOffers).map(([city, cityOffers]) => (
           <FavoritesListItem
-            city={city as CityName}
+            city={city}
             key={city}
             cityOffers={cityOffers}
           />
