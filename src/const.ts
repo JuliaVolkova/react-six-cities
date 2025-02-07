@@ -67,7 +67,31 @@ export const OPTIONS = [
 
 export const DEFAULT_PLACE = 'Cities';
 
+export const SortingOptions = {
+  POPULAR: 'Popular',
+  PRICE_LOW_TO_HIGH: 'Price: low to high',
+  PRICE_HIGH_TO_LOW: 'Price: high to low',
+  RATING: 'Top rated first'
+} as const;
+
 export const MapOption = {
   URL: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
   ATTRIBUTION: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
 };
+
+export const NameSpace = {
+  Offers: 'offers',
+  Offer: 'offer',
+  Favorites: 'favorites',
+  User: 'user',
+  Cities: 'cities'
+} as const;
+
+export const APIRoute = {
+  Offers: '/offers',
+  Favorites: '/favorite',
+  Comments: '/comments',
+  Login: '/login',
+  Logout: '/logout'
+} as const;
+
