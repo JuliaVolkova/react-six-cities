@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { CITIES, NameSpace } from '../../const';
+import { CITIES, DEFAULT_CITY, NameSpace } from '../../const';
 
 type CityInitialStateType = {
   currentCity: typeof CITIES[number];
 }
 
 const initialState: CityInitialStateType = {
-  currentCity: CITIES[0]
+  currentCity: DEFAULT_CITY
 };
 
 export const cities = createSlice({
@@ -16,7 +16,11 @@ export const cities = createSlice({
     changeCity: (state, action: PayloadAction<{city: typeof CITIES[number]}>) => {
       state.currentCity = action.payload.city;
     }
+  },
+  selectors: {
+    selectCurrentCity: (state: CityInitialStateType) => state.currentCity
   }
 });
 
 export const { changeCity } = cities.actions;
+export const { selectCurrentCity } = cities.selectors;

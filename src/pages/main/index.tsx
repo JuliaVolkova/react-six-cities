@@ -5,11 +5,9 @@ import OffersList from '../../components/offers-list';
 import Map from '../../components/map';
 import { City, Offers } from '../../types/offers';
 import { CardListClassNamesMap } from '../../stylesOptions';
-import { DEFAULT_CITY } from '../../const.ts';
-
-type MainProps = {
-  offers: Offers;
-};
+import { useAppSelector } from '../../hooks/store-hooks.ts';
+import { selectCurrentCity } from '../../store/cities/cities-slice.ts';
+import { selectOffers } from '../../store/offers/offers-slice.ts';
 
 type PlacesFoundProps = {
   currentCity: City;
@@ -24,17 +22,18 @@ const PlacesFound = memo(({ currentCity, offers }: PlacesFoundProps): JSX.Elemen
 
 PlacesFound.displayName = 'PlacesFound';
 
-const Main = ({ offers }: MainProps): JSX.Element => {
+const Main = (): JSX.Element => {
   const [activeOffer, setActiveOffer] = useState<string | undefined>();
-  const [currentCity, setCurrentCity] = useState<City>(DEFAULT_CITY);
+
+  const offers = useAppSelector(selectOffers);
+  const currentCity = useAppSelector(selectCurrentCity);
 
   const handleSelectActiveOffer = (offerId?: string) => setActiveOffer(offerId);
-  const handleChangeCurrentCity = (city: City) => setCurrentCity(city);
 
   return (
     <main className='page__main page__main--index'>
       <h1 className='visually-hidden'>Cities</h1>
-      <Locations onCityChange={handleChangeCurrentCity} currentCity={currentCity} />
+      <Locations currentCity={currentCity} />
       <div className='cities'>
         <div className='cities__places-container container'>
           <section className='cities__places places'>

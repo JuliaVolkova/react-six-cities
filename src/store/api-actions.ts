@@ -13,7 +13,7 @@ const createAppAsyncThunk = createAsyncThunk.withTypes<{
   extra: AxiosInstance;
 }>();
 
-export const fetchCards = createAppAsyncThunk<Offers, undefined>('cards/fetchCards',
+export const fetchOffers = createAppAsyncThunk<Offers, undefined>('cards/fetchCards',
   async (_arg, {extra: api}) => {
     const { data } = await api.get<Offers>(APIRoute.Offers);
     return data;

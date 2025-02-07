@@ -7,16 +7,14 @@ import Login from '../../pages/login';
 import NotFound from '../../pages/not-found';
 import Layout from '../layout';
 import PrivateRoute from '../private-route';
-import { Offers } from '../../types/offers.ts';
 import { AppRoute } from '../../const.ts';
 import { User } from '../../types/user.ts';
 
 type AppProps = {
-  offers: Offers;
   user: User;
 };
 
-const App = ({ offers, user }: AppProps) => (
+const App = ({ user }: AppProps) => (
   <HelmetProvider>
     <BrowserRouter>
       <Routes>
@@ -26,13 +24,13 @@ const App = ({ offers, user }: AppProps) => (
         >
           <Route
             index
-            element={<Main offers={offers} />}
+            element={<Main />}
           />
           <Route
             path={AppRoute.Favorites}
             element={
               <PrivateRoute user={user}>
-                <Favorites offers={offers} />
+                <Favorites />
               </PrivateRoute>
             }
           />

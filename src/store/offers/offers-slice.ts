@@ -1,17 +1,17 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace, SortingOptions } from '../../const';
-import { changeFavoriteStatus, fetchCards } from '../api-actions';
+import { changeFavoriteStatus, fetchOffers } from '../api-actions';
 import { Offers } from '../../types/offers.ts';
 import { TSortOptions } from '../../types/app.ts';
 
-type CardsInitialStateType = {
-    data: Offers;
-    isLoading: boolean;
-    isError: boolean;
-    sortOption: TSortOptions;
+type OffersInitialStateType = {
+  data: Offers;
+  isLoading: boolean;
+  isError: boolean;
+  sortOption: TSortOptions;
 }
 
-const initialState: CardsInitialStateType = {
+const initialState: OffersInitialStateType = {
   data: [],
   isLoading: false,
   isError: false,
@@ -28,15 +28,15 @@ export const offers = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchCards.pending, (state) => {
+      .addCase(fetchOffers.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(fetchCards.fulfilled, (state, action) => {
+      .addCase(fetchOffers.fulfilled, (state, action) => {
         state.data = action.payload;
         state.isLoading = false;
       })
-      .addCase(fetchCards.rejected, (state) => {
+      .addCase(fetchOffers.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
       })
@@ -46,7 +46,11 @@ export const offers = createSlice({
           state.data[index].isFavorite = action.payload.isFavorite;
         }
       });
+  },
+  selectors: {
+    selectOffers: (state: OffersInitialStateType): Offers => state.data
   }
 });
 
 export const {changeActiveSort} = offers.actions;
+export const {selectOffers} = offers.selectors;
