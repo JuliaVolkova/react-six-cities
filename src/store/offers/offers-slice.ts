@@ -1,8 +1,9 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
 import { NameSpace, SortingOptions } from '../../const';
 import { changeFavoriteStatus, fetchOffers } from '../api-actions';
 import { Offers } from '../../types/offers.ts';
 import { TSortOptions } from '../../types/app.ts';
+import { selectCurrentCity } from '../cities/cities-slice.ts';
 
 type OffersInitialStateType = {
   data: Offers;
@@ -22,9 +23,9 @@ export const offers = createSlice({
   name: NameSpace.Offers,
   initialState,
   reducers: {
-    changeActiveSort: (state, action: PayloadAction<{option: TSortOptions}>) => {
+    changeActiveSort: (state, action: PayloadAction<{ option: TSortOptions }>) => {
       state.sortOption = action.payload.option;
-    }
+    },
   },
   extraReducers(builder) {
     builder
@@ -48,9 +49,13 @@ export const offers = createSlice({
       });
   },
   selectors: {
-    selectOffers: (state: OffersInitialStateType): Offers => state.data
+    selectOffers: (state: OffersInitialStateType): Offers => state.data,
   }
 });
+const { changeActiveSort } = offers.actions;
+const { selectOffers } = offers.selectors;
 
-export const {changeActiveSort} = offers.actions;
-export const {selectOffers} = offers.selectors;
+const selectFilteredOffersByCurrentCity = createSelector([selectOffers, selectCurrentCity],
+  (offersList, currentCity) => offersList.filter((offer) => offer.city.name === currentCity.name));
+
+export {changeActiveSort, selectOffers, selectFilteredOffersByCurrentCity};

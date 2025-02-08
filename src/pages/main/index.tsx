@@ -7,7 +7,7 @@ import { City, Offers } from '../../types/offers';
 import { CardListClassNamesMap } from '../../stylesOptions';
 import { useAppSelector } from '../../hooks/store-hooks.ts';
 import { selectCurrentCity } from '../../store/cities/cities-slice.ts';
-import { selectOffers } from '../../store/offers/offers-slice.ts';
+import { selectFilteredOffersByCurrentCity, selectOffers } from '../../store/offers/offers-slice.ts';
 
 type PlacesFoundProps = {
   currentCity: City;
@@ -27,6 +27,7 @@ const Main = (): JSX.Element => {
 
   const offers = useAppSelector(selectOffers);
   const currentCity = useAppSelector(selectCurrentCity);
+  const filteredOffersByCity = useAppSelector(selectFilteredOffersByCurrentCity);
 
   const handleSelectActiveOffer = (offerId?: string) => setActiveOffer(offerId);
 
@@ -38,10 +39,10 @@ const Main = (): JSX.Element => {
         <div className='cities__places-container container'>
           <section className='cities__places places'>
             <h2 className='visually-hidden'>Places</h2>
-            <PlacesFound currentCity={currentCity} offers={offers} />
+            <PlacesFound currentCity={currentCity} offers={filteredOffersByCity} />
             <Sorting option='Popular' />
             <OffersList
-              offers={offers}
+              offers={filteredOffersByCity}
               className={CardListClassNamesMap.Cities}
               place='Cities'
               onMouseHover={handleSelectActiveOffer}
