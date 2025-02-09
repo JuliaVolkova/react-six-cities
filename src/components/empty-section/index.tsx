@@ -3,11 +3,8 @@ import { memo } from 'react';
 type EmptySectionProps = {
   title: string;
   description: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
-
-// No places to stay available
-// {`We could not find any property available at the moment in ${currentCity}`}
 
 const EmptySection = memo(
   ({ title, description, children }: EmptySectionProps) => (
@@ -23,7 +20,7 @@ const EmptySection = memo(
         <div className='cities__right-section'></div>
       </div>
     </div>
-  )
+  ),
 );
 
 EmptySection.displayName = 'EmptySection';

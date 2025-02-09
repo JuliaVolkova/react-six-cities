@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../header';
-import { DEFAULT_PLACE } from '../../const.ts';
+import { AppRoute, DEFAULT_PLACE } from '../../const.ts';
 import { MainBlockClassNamesMap, PathToPlacesMap } from '../../stylesOptions.ts';
 import { User } from '../../types/user.ts';
 
@@ -20,8 +20,12 @@ const Layout = ({ user }: LayoutProps) => {
     }
   }, [currentPath, pathname]);
 
+  const favorites = [];
+
   return (
-    <div className={MainBlockClassNamesMap[currentPath] ?? MainBlockClassNamesMap.NotFound}>
+    <div
+      className={`${MainBlockClassNamesMap[currentPath] ?? MainBlockClassNamesMap.NotFound} ${pathname === AppRoute.Favorites && favorites.length === 0 ? 'page--favorites-empty' : ''}`}
+    >
       <Header
         user={user}
         favorites={[]}
