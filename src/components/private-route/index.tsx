@@ -1,10 +1,10 @@
 import { Location, Navigate, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const.ts';
-import { User } from '../../types/user.ts';
+import { useAppSelector } from '../../hooks/store-hooks.ts';
+import { selectUserInfo } from '../../store/user/user-slice.ts';
 
 type PrivateRouteProps = {
   children: JSX.Element;
-  user: User | null;
   isReverse?: boolean;
 };
 
@@ -15,10 +15,10 @@ type LocationType = {
 function PrivateRoute({
   children,
   isReverse,
-  user = null,
 }: PrivateRouteProps): JSX.Element {
   const location: Location<LocationType> =
     useLocation() as Location<LocationType>;
+  const user = useAppSelector(selectUserInfo);
 
   if (user && isReverse) {
     const from = location.state?.from || { pathname: AppRoute.Cities };

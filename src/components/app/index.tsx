@@ -8,16 +8,11 @@ import NotFound from '../../pages/not-found';
 import Layout from '../layout';
 import PrivateRoute from '../private-route';
 import { AppRoute } from '../../const.ts';
-import { User } from '../../types/user.ts';
 import Loader from '../loader/loader.tsx';
 import { useAppSelector } from '../../hooks/store-hooks.ts';
 import { selectOffersLoadingStatus } from '../../store/offers/offers-slice.ts';
 
-type AppProps = {
-  user: User;
-};
-
-const App = ({ user }: AppProps) => {
+const App = () => {
   const isLoading = useAppSelector(selectOffersLoadingStatus);
 
   if (isLoading) {
@@ -30,7 +25,7 @@ const App = ({ user }: AppProps) => {
         <Routes>
           <Route
             path={AppRoute.Cities}
-            element={<Layout user={user}/>}
+            element={<Layout />}
           >
             <Route
               index
@@ -39,7 +34,7 @@ const App = ({ user }: AppProps) => {
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute user={user}>
+                <PrivateRoute>
                   <Favorites />
                 </PrivateRoute>
               }
@@ -53,7 +48,6 @@ const App = ({ user }: AppProps) => {
               element={
                 <PrivateRoute
                   isReverse
-                  user={user}
                 >
                   <Login />
                 </PrivateRoute>
