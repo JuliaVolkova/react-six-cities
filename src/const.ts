@@ -51,12 +51,12 @@ export const CITIES = [
 
 export const DEFAULT_CITY = CITIES[0];
 
-export const enum AppRoute {
-  Cities = '/',
-  Login = '/login',
-  Favorites = '/favorites',
-  Offer = '/offer/:id',
-}
+export const AppRoute = {
+  Cities: '/',
+  Login: '/login',
+  Favorites: '/favorites',
+  Offer: '/offer/:id',
+} as const;
 
 export const OPTIONS = [
   'Popular',

@@ -8,6 +8,7 @@ import { CardListClassNamesMap } from '../../stylesOptions';
 import { useAppSelector } from '../../hooks/store-hooks.ts';
 import { selectCurrentCity } from '../../store/cities/cities-slice.ts';
 import { selectSortedOffers } from '../../store/offers/offers-slice.ts';
+import EmptySection from '../../components/empty-section';
 
 type PlacesFoundProps = {
   currentCity: City;
@@ -33,24 +34,29 @@ const Main = (): JSX.Element => {
     <main className='page__main page__main--index'>
       <h1 className='visually-hidden'>Cities</h1>
       <Locations currentCity={currentCity} />
-      <div className='cities'>
-        <div className='cities__places-container container'>
-          <section className='cities__places places'>
-            <h2 className='visually-hidden'>Places</h2>
-            <PlacesFound currentCity={currentCity} offers={sortedOffersByCity} />
-            <Sorting />
-            <OffersList
-              offers={sortedOffersByCity}
-              className={CardListClassNamesMap.Cities}
-              place='Cities'
-              onMouseHover={handleSelectActiveOffer}
-            />
-          </section>
-          <div className='cities__right-section'>
-            <Map offers={sortedOffersByCity} activeOffer={activeOffer} city={currentCity} place='Cities' />
+      {sortedOffersByCity.length ?
+        <div className='cities'>
+          <div className='cities__places-container container'>
+            <section className='cities__places places'>
+              <h2 className='visually-hidden'>Places</h2>
+              <PlacesFound currentCity={currentCity} offers={sortedOffersByCity} />
+              <Sorting />
+              <OffersList
+                offers={sortedOffersByCity}
+                className={CardListClassNamesMap.Cities}
+                place='Cities'
+                onMouseHover={handleSelectActiveOffer}
+              />
+            </section>
+            <div className='cities__right-section'>
+              <Map offers={sortedOffersByCity} activeOffer={activeOffer} city={currentCity} place='Cities' />
+            </div>
           </div>
-        </div>
-      </div>
+        </div> :
+        <EmptySection
+          title='No places to stay available'
+          description={`We could not find any property available at the moment in ${currentCity.name}`}
+        />}
     </main>
   );
 };
