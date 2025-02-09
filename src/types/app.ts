@@ -1,4 +1,4 @@
 import { SortingOptions } from '../const';
 
 type ValueOf<T> = T[keyof T];
-export type TSortOptions = ValueOf<typeof SortingOptions>;
+export type SortOptions = ValueOf<typeof SortingOptions>;

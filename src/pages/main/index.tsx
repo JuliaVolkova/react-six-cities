@@ -7,7 +7,7 @@ import { City, Offers } from '../../types/offers';
 import { CardListClassNamesMap } from '../../stylesOptions';
 import { useAppSelector } from '../../hooks/store-hooks.ts';
 import { selectCurrentCity } from '../../store/cities/cities-slice.ts';
-import { selectFilteredOffersByCurrentCity, selectOffers } from '../../store/offers/offers-slice.ts';
+import { selectSortedOffers } from '../../store/offers/offers-slice.ts';
 
 type PlacesFoundProps = {
   currentCity: City;
@@ -24,10 +24,8 @@ PlacesFound.displayName = 'PlacesFound';
 
 const Main = (): JSX.Element => {
   const [activeOffer, setActiveOffer] = useState<string | undefined>();
-
-  const offers = useAppSelector(selectOffers);
   const currentCity = useAppSelector(selectCurrentCity);
-  const filteredOffersByCity = useAppSelector(selectFilteredOffersByCurrentCity);
+  const sortedOffersByCity = useAppSelector(selectSortedOffers);
 
   const handleSelectActiveOffer = (offerId?: string) => setActiveOffer(offerId);
 
@@ -39,17 +37,17 @@ const Main = (): JSX.Element => {
         <div className='cities__places-container container'>
           <section className='cities__places places'>
             <h2 className='visually-hidden'>Places</h2>
-            <PlacesFound currentCity={currentCity} offers={filteredOffersByCity} />
-            <Sorting option='Popular' />
+            <PlacesFound currentCity={currentCity} offers={sortedOffersByCity} />
+            <Sorting />
             <OffersList
-              offers={filteredOffersByCity}
+              offers={sortedOffersByCity}
               className={CardListClassNamesMap.Cities}
               place='Cities'
               onMouseHover={handleSelectActiveOffer}
             />
           </section>
           <div className='cities__right-section'>
-            <Map offers={offers} activeOffer={activeOffer} city={currentCity} place='Cities' />
+            <Map offers={sortedOffersByCity} activeOffer={activeOffer} city={currentCity} place='Cities' />
           </div>
         </div>
       </div>

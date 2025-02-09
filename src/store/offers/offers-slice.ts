@@ -2,14 +2,15 @@ import { PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
 import { NameSpace, SortingOptions } from '../../const';
 import { changeFavoriteStatus, fetchOffers } from '../api-actions';
 import { Offers } from '../../types/offers.ts';
-import { TSortOptions } from '../../types/app.ts';
+import { SortOptions } from '../../types/app.ts';
 import { selectCurrentCity } from '../cities/cities-slice.ts';
+import { sortBy } from '../../utils/sort.ts';
 
 type OffersInitialStateType = {
   data: Offers;
   isLoading: boolean;
   isError: boolean;
-  sortOption: TSortOptions;
+  sortOption: SortOptions;
 }
 
 const initialState: OffersInitialStateType = {
@@ -23,7 +24,7 @@ export const offers = createSlice({
   name: NameSpace.Offers,
   initialState,
   reducers: {
-    changeActiveSort: (state, action: PayloadAction<{ option: TSortOptions }>) => {
+    changeSort: (state, action: PayloadAction<{ option: SortOptions }>) => {
       state.sortOption = action.payload.option;
     },
   },
@@ -50,12 +51,24 @@ export const offers = createSlice({
   },
   selectors: {
     selectOffers: (state: OffersInitialStateType): Offers => state.data,
-  }
+    selectOffersLoadingStatus: (state: OffersInitialStateType): boolean => state.isLoading,
+    selectCurrentSortOption: (state: OffersInitialStateType): SortOptions => state.sortOption,
+  },
 });
-const { changeActiveSort } = offers.actions;
-const { selectOffers } = offers.selectors;
+
+const { changeSort } = offers.actions;
+const { selectOffers, selectOffersLoadingStatus, selectCurrentSortOption } = offers.selectors;
 
 const selectFilteredOffersByCurrentCity = createSelector([selectOffers, selectCurrentCity],
   (offersList, currentCity) => offersList.filter((offer) => offer.city.name === currentCity.name));
 
-export {changeActiveSort, selectOffers, selectFilteredOffersByCurrentCity};
+const selectSortedOffers = createSelector([selectFilteredOffersByCurrentCity, selectCurrentSortOption],
+  (filteredOffers, currentSort) => sortBy[currentSort](filteredOffers));
+
+export {
+  changeSort,
+  selectOffers,
+  selectOffersLoadingStatus,
+  selectCurrentSortOption,
+  selectSortedOffers,
+};
