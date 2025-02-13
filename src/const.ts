@@ -101,4 +101,16 @@ export const AuthorizationStatus = {
   Unknown: 'UNKNOWN',
 } as const;
 
+export const RatingNames: {[index: string]: string} = {
+  '1': 'terribly',
+  '2': 'badly',
+  '3': 'not bad',
+  '4': 'good',
+  '5': 'perfect'
+};
+
+export const CommentLength = {
+  MIN: 50,
+  MAX: 300
+} as const;
 

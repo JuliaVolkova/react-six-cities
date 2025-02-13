@@ -1,12 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
-import { Offers, Offer } from '../../types/offers.ts';
+import { Offers, OfferFull } from '../../types/offers.ts';
 import { OfferReviews } from '../../types/reviews.ts';
-import { changeFavoriteStatus, fetchNearbyCards, fetchOfferComments, getOfferInfoByID, postCommentToOffer } from '../api-actions';
+import {
+  changeFavoriteStatus,
+  fetchNearbyOffers,
+  fetchOfferComments,
+  getOfferInfoByID,
+  postCommentToOffer,
+} from '../api-actions';
 
 type OfferInitialStateType = {
-  offerInfo: Offer | null;
-  nearbyCards: Offers;
+  offerInfo: OfferFull | null;
+  nearbyOffers: Offers;
   comments: OfferReviews;
   isLoading: boolean;
   isError: boolean;
@@ -16,7 +22,7 @@ type OfferInitialStateType = {
 
 const initialState: OfferInitialStateType = {
   offerInfo: null,
-  nearbyCards: [],
+  nearbyOffers: [],
   comments: [],
   isLoading: false,
   isError: false,
@@ -42,8 +48,8 @@ export const offer = createSlice({
         state.isLoading = false;
         state.isError = true;
       })
-      .addCase(fetchNearbyCards.fulfilled, (state, action) => {
-        state.nearbyCards = action.payload;
+      .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
+        state.nearbyOffers = action.payload;
       })
       .addCase(fetchOfferComments.fulfilled, (state, action) => {
         state.comments = action.payload;
@@ -65,5 +71,36 @@ export const offer = createSlice({
           state.offerInfo.isFavorite = action.payload.isFavorite;
         }
       });
-  }
+  },
+  selectors: {
+    selectOfferInfo: (state: OfferInitialStateType): OfferFull | null => state.offerInfo,
+    selectNearbyOffers: (state: OfferInitialStateType): Offers => state.nearbyOffers,
+    selectOfferComments: (state: OfferInitialStateType): OfferReviews => state.comments,
+    selectOfferLoadingStatus: (state: OfferInitialStateType): boolean => state.isLoading,
+    selectOfferErrorStatus: (state: OfferInitialStateType): boolean => state.isError,
+    selectPostReviewErrorStatus: (state: OfferInitialStateType): boolean => state.isPostReviewError,
+    selectPostReviewLoadingStatus: (state: OfferInitialStateType): boolean => state.isPostCommentLoading,
+  },
 });
+
+const {
+  selectOfferInfo,
+  selectNearbyOffers,
+  selectOfferComments,
+  selectOfferLoadingStatus,
+  selectOfferErrorStatus,
+  selectPostReviewErrorStatus,
+  selectPostReviewLoadingStatus,
+} = offer.selectors;
+
+export {
+  selectOfferInfo,
+  selectNearbyOffers,
+  selectOfferComments,
+  selectOfferLoadingStatus,
+  selectOfferErrorStatus,
+  selectPostReviewErrorStatus,
+  selectPostReviewLoadingStatus,
+};
+
+

@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { State, store } from '.';
 import { dropToken, saveToken } from '../services/token';
 import { APIRoute } from '../const';
-import { Offers, Offer } from '../types/offers';
+import { Offers, Offer, OfferFull } from '../types/offers';
 import { OfferReviews, OfferReview, PostCommentInfo } from '../types/reviews.ts';
 import { LoginData, User } from '../types/user.ts';
 
@@ -42,14 +42,14 @@ export const logoutAction = createAppAsyncThunk<void, undefined>('user/logout',
   }
 );
 
-export const getOfferInfoByID = createAppAsyncThunk<Offer, string>('offer/getOfferInfo',
+export const getOfferInfoByID = createAppAsyncThunk<OfferFull, string>('offer/getOfferInfo',
   async (id, {extra: api}) => {
-    const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+    const { data } = await api.get<OfferFull>(`${APIRoute.Offers}/${id}`);
     return data;
   }
 );
 
-export const fetchNearbyCards = createAppAsyncThunk<Offers, string>('offer/fetchNearbyCards',
+export const fetchNearbyOffers = createAppAsyncThunk<Offers, string>('offer/fetchNearbyCards',
   async (id, {extra: api}) => {
     const { data } = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
     return data;
@@ -70,7 +70,7 @@ export const postCommentToOffer = createAppAsyncThunk<OfferReview, PostCommentIn
   }
 );
 
-export const fetchFavoriteCards = createAppAsyncThunk<Offers, undefined>('favorite/fetchCards',
+export const fetchFavoriteOffers = createAppAsyncThunk<Offers, undefined>('favorite/fetchCards',
   async (_arg, {extra: api}) => {
     const { data } = await api.get<Offers>(APIRoute.Favorites);
     return data;

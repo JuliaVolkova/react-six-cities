@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import ImageGallery from '../../components/image-gallery';
 import OfferFeatures from '../../components/offer-features';
 import OfferGoods from '../../components/offer-goods';
@@ -7,37 +8,83 @@ import Reviews from '../../components/reviews';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list';
 import BookmarkButton from '../../components/bookmark-button';
-import {
-  images,
-  features,
-  goods,
-  host,
-  description,
-  reviews,
-} from '../../mocks/offer.ts';
 import { CardListClassNamesMap } from '../../stylesOptions.ts';
-import { offers } from '../../mocks/offers.ts';
-import { DEFAULT_CITY } from '../../const.ts';
+import { AuthorizationStatus, DEFAULT_CITY } from '../../const.ts';
 import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks.ts';
+import { fetchNearbyOffers, fetchOfferComments, getOfferInfoByID } from '../../store/api-actions.ts';
+import { selectAuthorizationStatus } from '../../store/user/user-slice.ts';
+import NotFound from '../not-found';
+import Loader from '../../components/loader/loader.tsx';
+import {
+  selectNearbyOffers,
+  selectOfferComments,
+  selectOfferErrorStatus,
+  selectOfferInfo,
+  selectOfferLoadingStatus,
+} from '../../store/offer/offer-slice.ts';
+import ReviewForm from '../../components/review-form/review-form.tsx';
 
 const Offer = (): JSX.Element => {
   const { id } = useParams();
-  const nearPlaces = offers.slice(0, 3);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getOfferInfoByID(id))
+        .unwrap()
+        .then(() => {
+          dispatch(fetchNearbyOffers(id));
+          dispatch(fetchOfferComments(id));
+        });
+    }
+  }, [id, dispatch]);
+
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  const isLoading = useAppSelector(selectOfferLoadingStatus);
+  const isServerError = useAppSelector(selectOfferErrorStatus);
+  const offer = useAppSelector(selectOfferInfo);
+  const offerComments = useAppSelector(selectOfferComments);
+  const nearbyOffers = useAppSelector(selectNearbyOffers);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (!offer) {
+    return <NotFound />;
+  }
+
+  if (isServerError) {
+    return (
+      <main className="page__main page__main--offer">
+        <h3>Произошла ошибка при загрузке данных.</h3>
+      </main>
+    );
+  }
+
+  const {title, type, price, images, description, bedrooms, isPremium, isFavorite, goods, maxAdults, rating, host: { name, avatarUrl, isPro} } = offer;
+
+  const commentsToOffer = offerComments.slice()
+    .sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime())
+    .slice(0, 10);
+
+  const nearPlaces = nearbyOffers.slice(0, 3);
+
   return (
     <main className='page__main page__main--offer'>
       <section className='offer'>
         <ImageGallery images={images} />
         <div className='offer__container container'>
           <div className='offer__wrapper'>
-            <div className='offer__mark'>
-              <span>Premium</span>
-            </div>
+            {isPremium &&
+              <div className='offer__mark'>
+                <span>Premium</span>
+              </div>}
             <div className='offer__name-wrapper'>
-              <h1 className='offer__name'>
-                Beautiful &amp; luxurious studio at great location
-              </h1>
+              <h1 className='offer__name'>{title}</h1>
               <BookmarkButton
-                isFavorite={false}
+                isFavorite={isFavorite}
                 place='Offer'
               />
             </div>
@@ -46,11 +93,11 @@ const Offer = (): JSX.Element => {
                 <span style={{ width: '80%' }}></span>
                 <span className='visually-hidden'>Rating</span>
               </div>
-              <span className='offer__rating-value rating__value'>4.8</span>
+              <span className='offer__rating-value rating__value'>{rating}</span>
             </div>
-            <OfferFeatures features={features} />
+            <OfferFeatures features={[type, bedrooms, maxAdults]} />
             <div className='offer__price'>
-              <b className='offer__price-value'>&euro;120</b>
+              <b className='offer__price-value'>&euro;{price}</b>
               <span className='offer__price-text'>&nbsp;night</span>
             </div>
             <div className='offer__inside'>
@@ -60,16 +107,17 @@ const Offer = (): JSX.Element => {
             <div className='offer__host'>
               <h2 className='offer__host-title'>Meet the host</h2>
               <Host
-                avatarUrl={host.avatarUrl}
-                isPro={host.isPro}
-                userName={host.name}
+                avatarUrl={avatarUrl}
+                isPro={isPro}
+                userName={name}
               />
               <Description description={description} />
             </div>
-            <Reviews reviews={reviews} />
+            <Reviews reviews={commentsToOffer} />
+            {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
           </div>
         </div>
-        <Map offers={offers} activeOffer={id} city={DEFAULT_CITY} place='Offer' />
+        <Map offers={nearPlaces} activeOffer={id} city={DEFAULT_CITY} place='Offer' />
       </section>
       <div className='container'>
         <section className='near-places places'>
