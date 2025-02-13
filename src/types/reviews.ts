@@ -9,3 +9,13 @@ export type OfferReview = {
 };
 
 export type OfferReviews = OfferReview[];
+
+export type FormData = {
+  rating: string;
+  review: string;
+}
+
+export type PostCommentInfo = {
+  id: string;
+  comment: FormData;
+}

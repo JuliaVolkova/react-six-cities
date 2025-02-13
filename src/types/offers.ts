@@ -20,7 +20,7 @@ export type Location = {
   zoom: number;
 };
 
-type OfferType = 'hotel' | 'house' | 'apartment' | 'room';
+export type OfferType = 'hotel' | 'house' | 'apartment' | 'room';
 
 export type Offer = {
   id: string;
@@ -33,6 +33,19 @@ export type Offer = {
   isPremium: boolean;
   rating: number;
   previewImage: string;
+};
+
+export type OfferFull = Offer & {
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  images: string[];
+  maxAdults: number;
 };
 
 export type Offers = Offer[];

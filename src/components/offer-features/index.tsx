@@ -1,32 +1,24 @@
 import { memo } from 'react';
-
-type FeatureProps = {
-  feature: string;
-};
+import { OfferType } from '../../types/offers.ts';
 
 type FeaturesProps = {
-  features: string[];
+  features: [OfferType, number, number];
 };
 
-const OfferFeature = memo(
-  ({ feature }: FeatureProps): JSX.Element => (
-    <li className='offer__feature offer__feature--entire'>{feature}</li>
-  )
-);
-
-OfferFeature.displayName = 'OfferFeature';
-
 const OfferFeatures = memo(
-  ({ features }: FeaturesProps): JSX.Element => (
+  ({ features: [type, bedrooms, maxAdults] }: FeaturesProps): JSX.Element => (
     <ul className='offer__features'>
-      {features.map((feature) => (
-        <OfferFeature
-          feature={feature}
-          key={feature}
-        />
-      ))}
+      <li className='offer__feature offer__feature--entire'>
+        {type.toUpperCase()}
+      </li>
+      <li className='offer__feature offer__feature--bedrooms'>
+        {`${bedrooms} Bedrooms`}
+      </li>
+      <li className='offer__feature offer__feature--adults'>
+        {`Max ${maxAdults} adults`}
+      </li>
     </ul>
-  )
+  ),
 );
 
 OfferFeatures.displayName = 'OfferFeatures';
